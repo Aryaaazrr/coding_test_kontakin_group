@@ -1,30 +1,62 @@
+<script>
+export const description = "A sidebar that collapses to icons.";
+export const iframeHeight = "800px";
+export const containerClass = "w-full h-full";
+</script>
+
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import AppSidebar from "@/components/AppSidebar.vue";
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { Separator } from "@/components/ui/separator";
+import {
+    SidebarInset,
+    SidebarProvider,
+    SidebarTrigger,
+} from "@/components/ui/sidebar";
 </script>
 
 <template>
-    <Head title="Dashboard" />
-
-    <AuthenticatedLayout>
-        <template #header>
-            <h2
-                class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200"
+    <SidebarProvider>
+        <AppSidebar />
+        <SidebarInset>
+            <header
+                class="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12"
             >
-                Dashboard
-            </h2>
-        </template>
-
-        <div class="py-12">
-            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div
-                    class="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800"
-                >
-                    <div class="p-6 text-gray-900 dark:text-gray-100">
-                        You're logged in!
-                    </div>
+                <div class="flex items-center gap-2 px-4">
+                    <SidebarTrigger class="-ml-1" />
+                    <Separator orientation="vertical" class="mr-2 h-4" />
+                    <Breadcrumb>
+                        <BreadcrumbList>
+                            <BreadcrumbItem class="hidden md:block">
+                                <BreadcrumbLink href="#">
+                                    Building Your Application
+                                </BreadcrumbLink>
+                            </BreadcrumbItem>
+                            <BreadcrumbSeparator class="hidden md:block" />
+                            <BreadcrumbItem>
+                                <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                            </BreadcrumbItem>
+                        </BreadcrumbList>
+                    </Breadcrumb>
                 </div>
+            </header>
+            <div class="flex flex-1 flex-col gap-4 p-4 pt-0">
+                <div class="grid auto-rows-min gap-4 md:grid-cols-3">
+                    <div class="aspect-video rounded-xl bg-muted/50" />
+                    <div class="aspect-video rounded-xl bg-muted/50" />
+                    <div class="aspect-video rounded-xl bg-muted/50" />
+                </div>
+                <div
+                    class="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min"
+                />
             </div>
-        </div>
-    </AuthenticatedLayout>
+        </SidebarInset>
+    </SidebarProvider>
 </template>
