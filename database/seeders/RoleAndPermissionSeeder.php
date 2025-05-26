@@ -47,6 +47,7 @@ class RoleAndPermissionSeeder extends Seeder
         }
 
         $adminPermissions = [
+            'article-create',
             'article-read',
             'article-update',
             'article-delete',
@@ -58,11 +59,10 @@ class RoleAndPermissionSeeder extends Seeder
             'dosen-read',
             'dosen-update',
             'dosen-delete',
-            'mahasiswa-create',
-            'mahasiswa-read',
-            'mahasiswa-update',
-            'mahasiswa-delete',
-            'setting-update',
+            'user-account-create',
+            'user-account-read',
+            'user-account-update',
+            'user-account-delete',
         ];
 
         $adminRole = Role::where(['name' => 'administrator'])->first();

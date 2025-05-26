@@ -33,16 +33,16 @@ const props = defineProps({
 
 // This is sample data.
 const data = {
-    user: {
-        name: "shadcn",
-        email: "m@example.com",
-        avatar: "/avatars/shadcn.jpg",
-    },
+    // user: {
+    //     name: "shadcn",
+    //     email: "m@example.com",
+    //     avatar: "/avatars/shadcn.jpg",
+    // },
     teams: [
         {
-            name: "Acme Inc",
+            name: "CodingTest",
             logo: GalleryVerticalEnd,
-            plan: "Enterprise",
+            plan: "Web Developer",
         },
         {
             name: "Acme Corp.",
@@ -57,106 +57,40 @@ const data = {
     ],
     navMain: [
         {
-            title: "Playground",
-            url: "#",
-            icon: SquareTerminal,
-            isActive: true,
-            items: [
-                {
-                    title: "History",
-                    url: "#",
-                },
-                {
-                    title: "Starred",
-                    url: "#",
-                },
-                {
-                    title: "Settings",
-                    url: "#",
-                },
-            ],
-        },
-        {
-            title: "Models",
-            url: "#",
-            icon: Bot,
-            items: [
-                {
-                    title: "Genesis",
-                    url: "#",
-                },
-                {
-                    title: "Explorer",
-                    url: "#",
-                },
-                {
-                    title: "Quantum",
-                    url: "#",
-                },
-            ],
-        },
-        {
-            title: "Documentation",
-            url: "#",
-            icon: BookOpen,
-            items: [
-                {
-                    title: "Introduction",
-                    url: "#",
-                },
-                {
-                    title: "Get Started",
-                    url: "#",
-                },
-                {
-                    title: "Tutorials",
-                    url: "#",
-                },
-                {
-                    title: "Changelog",
-                    url: "#",
-                },
-            ],
-        },
-        {
-            title: "Settings",
-            url: "#",
-            icon: Settings2,
-            items: [
-                {
-                    title: "General",
-                    url: "#",
-                },
-                {
-                    title: "Team",
-                    url: "#",
-                },
-                {
-                    title: "Billing",
-                    url: "#",
-                },
-                {
-                    title: "Limits",
-                    url: "#",
-                },
-            ],
-        },
-    ],
-    projects: [
-        {
-            name: "Design Engineering",
-            url: "#",
-            icon: Frame,
-        },
-        {
-            name: "Sales & Marketing",
+            title: "Dashborad",
             url: "#",
             icon: PieChart,
+            isActive: false,
+            items: [
+                {
+                    title: "Role management",
+                    url: "dashboard",
+                }
+            ],
         },
         {
-            name: "Travel",
+            title: "Master",
             url: "#",
-            icon: Map,
+            icon: Settings2,
+            isActive: false,
+            items: [
+                {
+                    title: "Dosen",
+                    url: "dosen",
+                },
+                {
+                    title: "Article",
+                    url: "article",
+                },
+                {
+                    title: "History",
+                    url: "history",
+                },
+                {
+                    title: "User Account",
+                    url: "user-account",
+                },
+            ],
         },
     ],
 };
@@ -169,7 +103,7 @@ const data = {
         </SidebarHeader>
         <SidebarContent>
             <NavMain :items="data.navMain" />
-            <NavProjects :projects="data.projects" />
+            <!-- <NavProjects :projects="data.projects" /> -->
         </SidebarContent>
         <SidebarFooter>
             <NavUser :user="data.user" />

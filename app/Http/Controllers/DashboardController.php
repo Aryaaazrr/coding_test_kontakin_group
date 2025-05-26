@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\History;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class DashboardController extends Controller
 {
@@ -13,7 +16,11 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Dashboard');
+        $roles = Role::with('permissions')->get();
+
+        return Inertia::render('Dashboard/Index', [
+            'roles' => $roles,
+        ]);
     }
 
     /**
@@ -21,7 +28,11 @@ class DashboardController extends Controller
      */
     public function create()
     {
-        //
+        $permissions = Permission::all();
+
+        return Inertia::render('Dashboard/Create', [
+            'permissions' => $permissions,
+        ]);
     }
 
     /**
@@ -29,7 +40,20 @@ class DashboardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:50|unique:roles,name',
+            'permissions' => 'required|array|min:1',
+            'permissions.*' => 'integer|exists:permissions,id',
+        ]);
+
+        $role = Role::create([
+            'name' => $validated['name'],
+            'guard_name' => 'web',
+        ]);
+
+        $role->syncPermissions($validated['permissions']);
+
+        return redirect()->route('dashboard.index')->with('success', 'Role created successfully.');
     }
 
     /**
@@ -37,7 +61,11 @@ class DashboardController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $role = Role::with('permissions')->findOrFail($id);
+
+        return Inertia::render('Dashboard/Show', [
+            'role' => $role,
+        ]);
     }
 
     /**
@@ -45,7 +73,17 @@ class DashboardController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $role = Role::with('permissions')->findOrFail($id);
+        $permissions = Permission::all();
+
+        if ($role->name === 'administrator') {
+            return redirect()->route('dashboard.index')->with('error', 'Admin role cannot be edited.');
+        }
+
+        return Inertia::render('Dashboard/Edit', [
+            'role' => $role,
+            'permissions' => $permissions,
+        ]);
     }
 
     /**
@@ -53,7 +91,20 @@ class DashboardController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $role = Role::findOrFail($id);
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:50|unique:roles,name,' . $role->id,
+            'permissions' => 'required|array|min:1',
+            'permissions.*' => 'integer|exists:permissions,id',
+        ]);
+
+        $role->name = $validated['name'];
+        $role->save();
+
+        $role->syncPermissions($validated['permissions']);
+
+        return redirect()->route('dashboard.index')->with('success', 'Role updated successfully.');
     }
 
     /**
@@ -61,6 +112,14 @@ class DashboardController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $role = Role::findOrFail($id);
+
+        if ($role->name === 'administrator') {
+            return redirect()->route('dashboard.index')->with('error', 'Admin role cannot be deleted.');
+        }
+
+        $role->delete();
+
+        return redirect()->route('dashboard.index')->with('success', 'Role deleted successfully.');
     }
 }

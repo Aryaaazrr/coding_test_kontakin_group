@@ -16,8 +16,8 @@ return new class extends Migration
             // $table->foreignUuid('id_users')->constrained('users', 'id_users')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedBigInteger('id_users');
             $table->foreign('id_users')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('nim')->unique();
-            $table->string('nama_lengkap');
+            $table->string('nim')->unique()->nullable();
+            $table->string('nama_lengkap')->nullable();
             $table->string('prodi');
             $table->timestamps();
             $table->softDeletes();

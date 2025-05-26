@@ -50,7 +50,7 @@ const activeTeam = ref(props.teams[0]);
             <ChevronsUpDown class="ml-auto" />
           </SidebarMenuButton>
         </DropdownMenuTrigger>
-        <DropdownMenuContent
+        <!-- <DropdownMenuContent
           class="w-[--reka-dropdown-menu-trigger-width] min-w-56 rounded-lg"
           align="start"
           :side="isMobile ? 'bottom' : 'right'"
@@ -82,7 +82,7 @@ const activeTeam = ref(props.teams[0]);
             </div>
             <div class="font-medium text-muted-foreground">Add team</div>
           </DropdownMenuItem>
-        </DropdownMenuContent>
+        </DropdownMenuContent> -->
       </DropdownMenu>
     </SidebarMenuItem>
   </SidebarMenu>
